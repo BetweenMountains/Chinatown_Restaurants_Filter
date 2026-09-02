@@ -3,29 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chinatown Restaurant Identifier</title>
+    <title>Vancouver's Chinatown Restaurant Filter</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Tagesschrift&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: sans-serif; padding: 30px; background-color: #f4f1ea; color: #333; }
-        h1 { color: #d9381e; }
+        body { 
+            font-family: 'IM Fell English', serif; 
+            padding: 40px 20px; 
+            background-color: #fcf9f2; 
+            color: #B35A27; 
+        }
         
-        /* The Filtering Buttons */
-        #filters { margin-bottom: 30px; }
+        h1 { 
+            font-family: 'Tagesschrift', serif; 
+            color: #005AC4; 
+            font-weight: normal; 
+            text-align: center; 
+            font-size: 3.5em; 
+            margin-bottom: 5px; 
+            text-shadow: 0 3px 12px rgba(0, 90, 196, 0.15);
+        }
+
+        h3 { 
+            font-family: 'Tagesschrift', serif; 
+            color: #B35A27; 
+            font-weight: normal; 
+            margin: 15px 0 8px 0; 
+            font-size: 2em; 
+        }
+        
+        p { 
+            text-align: center; 
+            color: #B35A27; 
+            max-width: 600px; 
+            margin: 0 auto 30px auto; 
+            line-height: 1.6; 
+            font-size: 1.1em; 
+            opacity: 0.9;
+        }
+        
+        #filters { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 12px; 
+            margin-bottom: 40px; 
+        }
+
         .filter-btn { 
-            padding: 10px 15px; margin: 5px 5px 0 0; cursor: pointer; 
-            border: 1px solid #ccc; background: white; border-radius: 4px; font-weight: bold;
+            padding: 10px 22px; 
+            cursor: pointer; 
+            border: 2px solid #E49242; 
+            background: white; 
+            border-radius: 30px; 
+            color: #B35A27;
+            font-family: 'IM Fell English', serif; 
+            font-size: 1.1em; 
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        .filter-btn:hover { background: #f0f0f0; }
-        .filter-btn.active { background: #d9381e; color: white; border-color: #d9381e; }
+
+        .filter-btn:hover { 
+            background: #fffdfa; 
+            border-color: #25D977; 
+            color: #005AC4;
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 14px rgba(37, 217, 119, 0.3); 
+        }
+
+        .filter-btn.active { 
+            background: #005AC4; 
+            color: #ffffff; 
+            border-color: #005AC4; 
+            box-shadow: 0 6px 16px rgba(0, 90, 196, 0.35); 
+        }
         
-        /* The Photo Grid */
-        .gallery { display: flex; flex-wrap: wrap; gap: 20px; }
-        .card { 
-            background: white; padding: 15px; border-radius: 8px; width: 320px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none; 
+        /* Soft Floating Cards */
+        .gallery { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 30px; 
+            justify-content: center; 
         }
-        .card.show { display: block; /* Only shows when the filter matches */ }
-        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
-        .features { font-size: 0.85em; color: #666; margin-top: 10px; line-height: 1.4; }
+
+        .card { 
+            background: white; 
+            padding: 18px; 
+            border-radius: 20px; 
+            width: 300px; 
+            box-shadow: 0 10px 25px rgba(179, 90, 39, 0.08); 
+            display: none; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; 
+            border: 2px solid #D9A443; 
+        }
+
+        .card.show { 
+            display: block; 
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        
+        .card:hover { 
+            transform: translateY(-6px); 
+            border-color: #25D977; 
+            box-shadow: 0 15px 30px rgba(37, 217, 119, 0.25); 
+        }
+        
+        .card img { 
+            width: 100%; 
+            height: 220px; 
+            object-fit: cover; 
+            border-radius: 14px; 
+        }
+
+        .features { 
+            font-size: 1.05em; 
+            color: #B35A27; 
+            line-height: 1.5; 
+        }
+
+        .features strong {
+            color: #E49242; 
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -42,7 +148,6 @@
     </div>
 
     <div class="gallery">
-        <!-- Add class names matching the buttons to categorize each restaurant -->
         
         <div class="card checkered-floor neon-sign">
             <img src="images/hoho-interior.jpg" alt="Ho Ho Chop Suey">
@@ -62,11 +167,9 @@
             const cards = document.querySelectorAll('.card');
             const buttons = document.querySelectorAll('.filter-btn');
 
-            // Update active button color
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Show or hide cards based on their class names
             cards.forEach(card => {
                 card.classList.remove('show');
                 if (category === 'all' || card.classList.contains(category)) {
@@ -75,7 +178,6 @@
             });
         }
         
-        // Run the filter immediately to show all cards on load
         filterSelection('all');
     </script>
 </body>
