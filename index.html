@@ -22,12 +22,37 @@
         
         h1 { 
             font-family: 'Tagesschrift', serif; 
-            color: #005AC4; 
+            color: #ffffff; 
             font-weight: normal; 
             text-align: center; 
-            font-size: 3.5em; 
-            margin-bottom: 5px; 
-            text-shadow: 0 3px 12px rgba(0, 90, 196, 0.15);
+            font-size: 4.5em; 
+            margin-bottom: 15px; 
+        
+            text-shadow: 
+                0 0 5px #ffffff,
+                0 0 10px #ffffff,
+                0 0 20px #005AC4,
+                0 0 40px #005AC4,
+                0 0 80px #005AC4,
+                0 0 100px #005AC4;
+                
+            animation: neon-flicker 3s infinite alternate;
+        }
+        @keyframes neon-flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 
+                    0 0 5px #ffffff,
+                    0 0 10px #ffffff,
+                    0 0 20px #005AC4,
+                    0 0 40px #005AC4,
+                    0 0 80px #005AC4,
+                    0 0 100px #005AC4;
+                color: #ffffff;
+            }
+            20%, 24%, 55% {       
+                text-shadow: none;
+                color: #005AC4; 
+            }
         }
 
         h3 { 
