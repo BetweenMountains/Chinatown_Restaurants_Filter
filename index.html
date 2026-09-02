@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinatown Restaurant Identifier</title>
+    <style>
+        body { font-family: sans-serif; padding: 30px; background-color: #f4f1ea; color: #333; }
+        h1 { color: #d9381e; }
+        
+        /* The Filtering Buttons */
+        #filters { margin-bottom: 30px; }
+        .filter-btn { 
+            padding: 10px 15px; margin: 5px 5px 0 0; cursor: pointer; 
+            border: 1px solid #ccc; background: white; border-radius: 4px; font-weight: bold;
+        }
+        .filter-btn:hover { background: #f0f0f0; }
+        .filter-btn.active { background: #d9381e; color: white; border-color: #d9381e; }
+        
+        /* The Photo Grid */
+        .gallery { display: flex; flex-wrap: wrap; gap: 20px; }
+        .card { 
+            background: white; padding: 15px; border-radius: 8px; width: 320px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: none; 
+        }
+        .card.show { display: block; /* Only shows when the filter matches */ }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 4px; }
+        .features { font-size: 0.85em; color: #666; margin-top: 10px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+    <h1>Chinatown Interior Identifier</h1>
+    <p>Select a prominent feature seen in your historical photograph to filter.</p>
+
+    <div id="filters">
+        <button class="filter-btn active" onclick="filterSelection('all')">Show All</button>
+        <button class="filter-btn" onclick="filterSelection('checkered-floor')">Checkered Floor</button>
+        <button class="filter-btn" onclick="filterSelection('wood-paneling')">Wood Paneling</button>
+        <button class="filter-btn" onclick="filterSelection('neon-sign')">Neon Sign</button>
+        <button class="filter-btn" onclick="filterSelection('red-booths')">Red Booths</button>
+    </div>
+
+    <div class="gallery">
+        <!-- Add class names matching the buttons to categorize each restaurant -->
+        
+        <div class="card checkered-floor neon-sign">
+            <img src="images/hoho-interior.jpg" alt="Ho Ho Chop Suey">
+            <h3 style="margin: 10px 0 5px 0;">Ho Ho Chop Suey</h3>
+            <div class="features"><strong>Identifiable Features:</strong> Black and white checkered tile floor, indoor neon signage.</div>
+        </div>
+
+        <div class="card wood-paneling red-booths">
+            <img src="images/newtown-interior.jpg" alt="New Town Bakery">
+            <h3 style="margin: 10px 0 5px 0;">New Town Bakery</h3>
+            <div class="features"><strong>Identifiable Features:</strong> Dark wood panel walls, vinyl red booth seating.</div>
+        </div>
+    </div>
+
+    <script>
+        function filterSelection(category) {
+            const cards = document.querySelectorAll('.card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update active button color
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show or hide cards based on their class names
+            cards.forEach(card => {
+                card.classList.remove('show');
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.classList.add('show');
+                }
+            });
+        }
+        
+        // Run the filter immediately to show all cards on load
+        filterSelection('all');
+    </script>
+</body>
+</html>
